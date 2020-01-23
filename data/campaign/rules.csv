@@ -1,0 +1,7 @@
+id,trigger,conditions,script,text,options,notes
+sal_salvageOptionSelected,DialogOptionSelected,$option == salPerform,"SalvageEntityWrapper performSalvage
+FireBest PostSalvagePerform",,,
+
+pods_openOption,DialogOptionSelected,$option == podsOpen,"unset $locked
+unset $trapped
+CargoPodsWrapper openCargo",,,
