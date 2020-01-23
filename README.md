@@ -11,7 +11,9 @@ All features can be configured in the setting.json file.
 
 Can this be added to and removed from an ongoing save? Yes
 
-###### DropSurplus
+
+
+###### Drop Surplus
 
 If cargo, personel or fuel capacity is exhausted additional loot from combat, salvage or cargo pods is automatically dropped. If other cargo pods are nearby they are merged to avoid cluttering when searching the same debries a couple of times. This speeds up the looting mechanics since the player can simply hit take all and leave.
 
@@ -34,7 +36,7 @@ dropSurplus: {
 * mergeCargoPodsRadius
   * The maximum range for a cargo pod to be away from the ship to be eligible for merging. The measure is the same as sensor range.
   
-###### DropSurplus
+###### Unlimited command points
 
 Ensures that the player has at least 5 command points at any time.
 
