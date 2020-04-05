@@ -1,10 +1,4 @@
 {
-	dropSurplus: {
-		commoditiesToDrop: ["metals","ore","food","organics","domestic_goods","rare_ore","rare_metals","volatiles","heavy_machinery","supplies"],
-		personelToDrop: ["marines","crew"],
-		fuelToDrop: ["fuel"],
-		mergeCargoPods: true,
-		mergeCargoPodsRadius: 300
-	},
-	unlimitedCommandPoints: true
+	modMenuKey: 88,
+	gameMenuKey: 68
 }
