@@ -15,7 +15,9 @@ The keys for openening the mod menu and the game menu can be configured in the s
 
 Can this be added to and removed from an ongoing save? Yes
 
+How do I add settings for my mod to the menu? Add this mods jar as a library reference, do not include the jar. Then look at the showcase project under https://github.com/razuhl/SSMSQoLTest . It contains the java code for every type of settings that can be used. Remind your users that they have to manage the mod load order to ensure your mod loads after this one.
 
+How do I change the load order? The order of mods is lexical. Adding prefixes to mod names which are defined in the respective mod_info.json file allows reordering. Putting a zero in front of the name should promote it to the top.
 
 ###### Drop Surplus
 
@@ -30,6 +32,8 @@ Ensures that the player has at least 5 command points at any time.
 ###### Mod Menu (F12)
 
 The mod menu provides a custom UI to edit settings in-game instead of editing configuration files. The settings are automatically saved into the file "[Starsector]/saves/common/SSMSQoL.json.data" and apply across all save games.
+
+Authors can modify Integer, Float, Boolean, String, Compositions and List of those types. They can either be edited directly with textboxes etc. or values are chosen from a dynamic list of options.
 
 ###### Game Menu (F10)
 
