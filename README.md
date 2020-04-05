@@ -27,10 +27,10 @@ Modders can use the new command DropSurplus in the rules to trigger the function
 
 Ensures that the player has at least 5 command points at any time.
 
-###### Mod Menu
+###### Mod Menu (F12)
 
 The mod menu provides a custom UI to edit settings in-game instead of editing configuration files. The settings are automatically saved into the file "[Starsector]/saves/common/SSMSQoL.json.data" and apply across all save games.
 
-###### Game Menu
+###### Game Menu (F10)
 
 The game menu uses the same UI as the mod menu but it changes values in the currently running game instead of saving them seperately. This allows editing values like which resources a planet has.
