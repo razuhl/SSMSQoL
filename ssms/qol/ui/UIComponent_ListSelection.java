@@ -22,6 +22,8 @@ import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.util.Pair;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import org.lwjgl.opengl.GL11;
@@ -56,12 +58,26 @@ public abstract class UIComponent_ListSelection<T> extends UIComponent_Base {
             colorIconShadow = new float[]{0.0f/255.0f, 152.0f/255.0f, 171.0f/255.0f};
 
     public UIComponent_ListSelection(List<T> options, List<T> selection, UIValueHandler<List<T>> valueHandler, boolean coerceEmptyToNull) {
+        this(options, selection, valueHandler, coerceEmptyToNull, true);
+    }
+    
+    public UIComponent_ListSelection(List<T> options, List<T> selection, UIValueHandler<List<T>> valueHandler, boolean coerceEmptyToNull, boolean sort) {
         if ( options == null ) options = new ArrayList<>();
         if ( selection == null ) this.selection = new ArrayList<>();
         else this.selection = new ArrayList<>(selection);
         this.optionsOriginalOrder = new ArrayList<>(options);
         this.valueHandler = valueHandler;
         this.coerceEmptyToNull = coerceEmptyToNull;
+        if ( sort ) {
+            Collections.sort(this.optionsOriginalOrder, new Comparator<T>() {
+                @Override
+                public int compare(T o1, T o2) {
+                    String l1 = getLabel(o1), l2 = getLabel(o2);
+                    if ( l1 == null ) return -1;
+                    return l1.compareToIgnoreCase(l2);
+                }
+            });
+        }
         rebuildOptions();
     }
     

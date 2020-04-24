@@ -37,6 +37,8 @@ public class PropertiesContainer<K> {
     protected boolean usesConfigurationState = false;
 
     public PropertiesContainer(K sourceObject, PropertiesContainerConfiguration<K> conf) {
+        //TODO Keeping the instance of the used sourceObject for a propertiesContainer can be done in the game scope(since it is never persisted). 
+        //That allows to ease up the initialization of uninitialized sourceObject via a default value.
         this.conf = conf;
         fields = new HashMap<>();
         for ( PropertyConfiguration<K,?> property : conf.getProperties() ) {

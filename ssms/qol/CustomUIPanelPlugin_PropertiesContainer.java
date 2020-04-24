@@ -183,7 +183,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
                         public void acceptedValue(List<Object> value) {
                             pf.set(value);
                         }
-                    }, pc.isNullable()) {
+                    }, pc.isNullable(), true) {
                         @Override
                         protected String getLabel(Object o) {
                             return pl.getOptionLabel(o);
@@ -238,7 +238,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
                         @Override
                         public void acceptedValue(Object value) {
                             pf.set(value);
-                            showCurrentSettings();
+                            showPreviousSettings();
                         }
                     }, true) {
                         @Override

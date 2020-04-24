@@ -419,6 +419,7 @@ public class UIComponent_ListInput<T> extends UIComponent_Base {
             entry = null;
         }
         options.add(entry);
+        valueHandler.submitValue(context, new ArrayList<>(options));
         buildOptionComponents();
     }
 

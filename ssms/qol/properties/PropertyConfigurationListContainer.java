@@ -17,12 +17,16 @@
  */
 package ssms.qol.properties;
 
+import com.fs.starfarer.api.Global;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import org.apache.log4j.Level;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import ssms.qol.ModPlugin;
 
 /**
  *
@@ -62,8 +66,19 @@ public class PropertyConfigurationListContainer<K> extends PropertyConfiguration
                     if ( setter != null ) setter.set(sourceObject, null);
                 } else {
                     List sourceObjects = getter.get(sourceObject);
-                    if ( sourceObjects == null ) sourceObjects = new ArrayList<>();
+                    if ( sourceObjects == null ) {
+                        sourceObjects = new ArrayList<>();
+                        if ( setter != null ) setter.set(sourceObject, sourceObjects);
+                    }
                     int sourceObjectsCount = sourceObjects.size(); int containerCounts = value.size();
+                    for ( int i = sourceObjectsCount; i < containerCounts; i++ ) {
+                        try {
+                            sourceObjects.add(PropertyConfigurationListContainer.this.createNewEntry.call());
+                        } catch (Exception ex) {
+                            Global.getLogger(ModPlugin.class).log(Level.ERROR, "Failed to spawn new source entry for property container list!", ex);
+                        }
+                    }
+                    sourceObjectsCount = sourceObjects.size();
                     for ( int i = 0; i < sourceObjectsCount && i < containerCounts; i++ ) {
                         conf.set(sourceObjects.get(i), (PropertiesContainer)value.get(i));
                     }
