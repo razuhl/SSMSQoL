@@ -61,6 +61,9 @@ public class PropertiesContainer<K> {
             attachFieldIfPossible(property.getId());
         }
         loadFrom(json);
+        for ( PropertyConfiguration<K,?> property : conf.getProperties() ) {
+            attachFieldIfPossible(property.getId());
+        }
         dirty = false;
         active = true;
     }

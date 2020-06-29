@@ -57,22 +57,24 @@ public class UIComponent_Column extends UIComponent_Parent {
         layoutDirty = true;
     }
     
-    public void setGrowHorizontal(boolean allowHorizontalGrowth) {
+    public UIComponent_Column setGrowHorizontal(boolean allowHorizontalGrowth) {
         if ( this.allowHorizontalGrowth != allowHorizontalGrowth ) {
             this.allowHorizontalGrowth = allowHorizontalGrowth;
             constraintsDirty = layoutDirty = true;
         }
+        return this;
     }
     
     public boolean getGrowHorizontal() {
         return this.allowHorizontalGrowth;
     }
     
-    public void setGrowVertical(boolean allowVerticalGrowth) {
+    public UIComponent_Column setGrowVertical(boolean allowVerticalGrowth) {
         if ( this.allowVerticalGrowth != allowVerticalGrowth ) {
             this.allowVerticalGrowth = allowVerticalGrowth;
             constraintsDirty = layoutDirty = true;
         }
+        return this;
     }
     
     public boolean getGrowVertical() {

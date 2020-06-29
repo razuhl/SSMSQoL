@@ -36,11 +36,14 @@ import ssms.qol.ModPlugin;
  * @param <K>
  */
 public class PropertiesContainerConfiguration<K> {
-    public enum CorePropertiesDialogs {
+    static public enum CorePropertiesDialogs {
         Application("Application"),Game("Game");
         private final String id;
         private CorePropertiesDialogs(String id) {this.id = id;}
         public String getId() {return id;}
+    }
+    static public interface PostSetter {
+        void merge(List<PropertiesContainer> loadedSettings);
     }
     protected String configurationId, label;
     protected Map<String,PropertyConfiguration<K,?>> propertiesLookup;
@@ -55,7 +58,18 @@ public class PropertiesContainerConfiguration<K> {
     protected PropertyValueGetter<String,K> sourceObjectFromId;
     protected boolean usesConfigurationState, applicationScoped;
     protected String displayInDialogId;
+    protected Map<String,PostSetter> postSetters;
 
+    public void addPostSetter(String id, PostSetter postSetter) {
+        if ( postSetters == null ) postSetters = new HashMap<>();
+        postSetters.put(id,postSetter);
+    }
+    
+    public PostSetter removePostSetter(String id) {
+        if ( postSetters != null ) return postSetters.remove(id);
+        else return null;
+    }
+    
     public void setUsesConfigurationState(boolean usesConfigurationState) {
         this.usesConfigurationState = usesConfigurationState;
     }
@@ -317,5 +331,11 @@ public class PropertiesContainerConfiguration<K> {
             logger.log(Level.WARN, "Failed to create property container from json. "+json,ex);
         }
         return null;
+    }
+    public void postSetters(List<PropertiesContainer> loadedSettings) {
+        if ( postSetters != null ) {
+            for ( PostSetter ps : postSetters.values() )
+                ps.merge(loadedSettings);
+        }
     }
 }

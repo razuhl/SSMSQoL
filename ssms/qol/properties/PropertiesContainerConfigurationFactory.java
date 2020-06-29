@@ -110,6 +110,7 @@ public class PropertiesContainerConfigurationFactory {
         Logger logger = Global.getLogger(ModPlugin.class);
         
         for ( PropertiesContainerConfiguration props : configurations.values() ) {
+            List<PropertiesContainer> loadedSettings = new ArrayList<>();
             if ( props.getAllSourceObjects() != null ) {
                 Map<String,PropertiesContainer> instances = managedInstances.get(props.getConfigurationId());
                 if ( instances == null ) {
@@ -165,6 +166,7 @@ public class PropertiesContainerConfigurationFactory {
                             overriddenSettings.get(setting.getId()).copyTo(setting,true);
                         }
                         
+                        loadedSettings.add(setting);
                         try {
                             if ( !setting.set() ) {
                                 throw new Exception("Set method returned false, this should be handled via a validator!");
@@ -183,6 +185,7 @@ public class PropertiesContainerConfigurationFactory {
                     setting.setDirty(false);
                 }
             }
+            props.postSetters(loadedSettings);
         }
     }
 

@@ -26,8 +26,13 @@ import com.fs.starfarer.ui.impl.StandardTooltipV2;
 import com.fs.starfarer.ui.impl.StandardTooltipV2Expandable;
 import java.awt.Color;
 import java.lang.ref.WeakReference;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
@@ -391,5 +396,38 @@ public class UIUtil {
     
     public void removeTooltip() {
         tooltipComponent = null;
+    }
+    
+    public <T> List<T> findComponents(UIComponent_Parent parent, Class<T> clz) {
+        List<T> lst = new ArrayList<>();
+        findComponents(parent, clz, lst);
+        return lst;
+    }
+    
+    public <T> void findComponents(UIComponent_Parent parent, Class<T> clz, List<T> components) {
+        if ( parent == null ) return;
+        Deque<Integer> indexes = new ArrayDeque<>();
+        int i = 0;
+        while ( parent != null ) {
+            List<UIComponent> childs = parent.getChilds();
+            for ( ; i < childs.size(); i++ ) {
+                UIComponent child = childs.get(i);
+                if ( clz.isAssignableFrom(child.getClass()) ) {
+                    components.add((T) child);
+                }
+                if ( UIComponent_Parent.class.isAssignableFrom(child.getClass()) ) {
+                    indexes.add(i + 1);
+                    parent = (UIComponent_Parent)child;
+                    childs = parent.getChilds();
+                    i = -1;
+                }
+            }
+            if ( !indexes.isEmpty() ) {
+                i = indexes.pop();
+                parent = parent.parentComponent();
+            } else {
+                break;
+            }
+        }
     }
 }

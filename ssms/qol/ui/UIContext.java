@@ -83,7 +83,7 @@ public class UIContext {
         marginLeft("marginLeft",Integer.valueOf(2)), marginRight("marginRight",Integer.valueOf(2)),
         marginTop("marginTop",Integer.valueOf(2)), marginBottom("marginBottom",Integer.valueOf(2)),
         horizontalGap("horizontalGap",Integer.valueOf(2)), verticalGap("verticalGap",Integer.valueOf(2)), alphaFactor("alphaFactor",Float.valueOf(1f));
-        String id; Object initialValue;
+        public final String id; public final Object initialValue;
         private StyleProperty(String id, Object initialValue) {
             this.id = id;
             this.initialValue = initialValue;

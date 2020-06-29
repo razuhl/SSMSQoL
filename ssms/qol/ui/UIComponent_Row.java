@@ -201,7 +201,7 @@ public class UIComponent_Row extends UIComponent_Parent {
             } else {
                 r.setHeight(hc.max);
                 switch ( alignmentVertically ) {
-                    case top: r.setY(adjustedY+adjustedHeight);break;
+                    case top: r.setY(adjustedY+adjustedHeight-hc.max);break;
                     case bottom: r.setY(adjustedY);break;
                     case middle: r.setY(adjustedY+(adjustedHeight-hc.max)/2);break;
                 }

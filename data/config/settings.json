@@ -1,6 +1,7 @@
 {
 	ruleCommandPackages:["ssms.qol.rule"],
 	plugins:{
-		SSMSUnlimitedCommandPoints:"ssms.qol.EveryFrameCombatPlugin_UnlimitedCommandPoints"
+		SSMSUnlimitedCommandPoints:"ssms.qol.EveryFrameCombatPlugin_UnlimitedCommandPoints",
+		SSMSPostOnAppliactionLoadPhase:"ssms.qol.EveryFrameCombatPlugin_PostOnApplicationLoadPhase"
 	}
 }
