@@ -84,8 +84,7 @@ public class PropertyConfigurationContainer<K, T> extends PropertyConfigurationB
                     //} else field.set(defaultValue);
                 } else {
                     String confId = json.getString(id+"#conf");
-                    pc = new PropertiesContainer(json, PropertiesContainerConfigurationFactory.getInstance().getPropertiesContainerConfiguration(confId));
-                    pc.loadFrom((JSONObject)value);
+                    pc = new PropertiesContainer((JSONObject)value, PropertiesContainerConfigurationFactory.getInstance().getPropertiesContainerConfiguration(confId));
                     //if ( isValid(pc) ) {
                         field.set(pc);
                         field.setConfigured(true);

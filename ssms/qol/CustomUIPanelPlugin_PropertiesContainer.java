@@ -80,12 +80,13 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
     protected LogHandler logHandler;
     protected static class Breadcrumb {
         PropertyConfiguration propertyConfiguration;
-        PropertyField propertyField;
-        PropertiesContainer container;
+        String propertyFieldId;
+        PropertiesContainer container, propertyContainer;
 
-        public Breadcrumb(PropertyConfiguration configuration, PropertyField field) {
+        public Breadcrumb(PropertyConfiguration configuration, String fieldId, PropertiesContainer container) {
             this.propertyConfiguration = configuration;
-            this.propertyField = field;
+            this.propertyFieldId = fieldId;
+            this.propertyContainer = container;
         }
         
         public Breadcrumb(PropertiesContainer container) {
@@ -147,7 +148,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
         if ( bc.container != null ) {
             root = buildContainerPage(bc.container);
         } else {
-            root = buildPropertyPage(bc.propertyConfiguration,bc.propertyField);
+            root = buildPropertyPage(bc.propertyConfiguration,bc.propertyFieldId,bc.propertyContainer);
         }
         if ( panelPosition != null )
             root.resize(new Rectangle((int)panelPosition.getX() + 10, (int)panelPosition.getY() + 10, (int)panelPosition.getWidth() - 20, (int)panelPosition.getHeight() - 20));
@@ -160,7 +161,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
         }
     }
     
-    protected <T> UIComponent_Parent buildPropertyPage(PropertyConfiguration pc, final PropertyField pf) {
+    protected <T> UIComponent_Parent buildPropertyPage(PropertyConfiguration pc, final String fieldId, final PropertiesContainer container) {
         UIComponent_Parent root = UIComponentParentFactory.getFactory(new UIComponent_Column(AlignmentHorizontal.left, AlignmentVertical.top))
                 .finish();
         root.addChild(UIComponentParentFactory.getFactory(new UIComponent_Row(AlignmentHorizontal.left, AlignmentVertical.middle))
@@ -178,10 +179,10 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
         
         if ( PropertyConfigurationListSelectable.class.isAssignableFrom(pc.getClass()) ) {
             final PropertyConfigurationListSelectable pl = (PropertyConfigurationListSelectable) pc;
-            root.addChild(UIComponentFactory.getFactory(new UIComponent_ListSelection<Object>(pl.buildOptions(),(List)pf.get(),new UIValueHandler<List<Object>>() {
+            root.addChild(UIComponentFactory.getFactory(new UIComponent_ListSelection<Object>(pl.buildOptions(),(List)container.getFieldValue(fieldId, List.class),new UIValueHandler<List<Object>>() {
                         @Override
                         public void acceptedValue(List<Object> value) {
-                            pf.set(value);
+                            container.setFieldValue(fieldId, value);
                         }
                     }, pc.isNullable(), true) {
                         @Override
@@ -194,10 +195,10 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
                     .finish());
         } else if ( PropertyConfigurationListContainer.class.isAssignableFrom(pc.getClass()) ) {
             final PropertyConfigurationListContainer pp = (PropertyConfigurationListContainer)pc;
-            root.addChild(UIComponentFactory.getFactory(new UIComponent_ListInput<PropertiesContainer>(PropertiesContainer.class,(List)pf.get(),new UIValueHandler<List<PropertiesContainer>>() {
+            root.addChild(UIComponentFactory.getFactory(new UIComponent_ListInput<PropertiesContainer>(PropertiesContainer.class,(List)container.getFieldValue(fieldId, List.class),new UIValueHandler<List<PropertiesContainer>>() {
                         @Override
                         public void acceptedValue(List<PropertiesContainer> value) {
-                            pf.set(value);
+                            container.setFieldValue(fieldId, value);
                         }
                     }, pp.isAddingAllowed(), pp.isRemovalAllowed(), false, new Callable<PropertiesContainer>() {
                         @Override
@@ -218,10 +219,10 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
                     .finish());
         } else if ( PropertyConfigurationListPrimitive.class.isAssignableFrom(pc.getClass()) ) {
             final PropertyConfigurationListPrimitive pp = (PropertyConfigurationListPrimitive)pc;
-            root.addChild(UIComponentFactory.getFactory(new UIComponent_ListInput<Object>(pp.getInnerType(),(List)pf.get(),new UIValueHandler<List<Object>>() {
+            root.addChild(UIComponentFactory.getFactory(new UIComponent_ListInput<Object>(pp.getInnerType(),(List)container.getFieldValue(fieldId, List.class),new UIValueHandler<List<Object>>() {
                         @Override
                         public void acceptedValue(List<Object> value) {
-                            pf.set(value);
+                            container.setFieldValue(fieldId, value);
                         }
                     }, pp.isAddingAllowed(), pp.isRemovalAllowed(), pp.isInnerNullable(), new Callable<Object>() {
                         @Override
@@ -237,7 +238,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
             root.addChild(UIComponentFactory.getFactory(new UIComponent_ListSelect<Object>(ps.buildOptions(),new UIValueHandler<Object>() {
                         @Override
                         public void acceptedValue(Object value) {
-                            pf.set(value);
+                            container.setFieldValue(fieldId, value);
                             showPreviousSettings();
                         }
                     }, true) {
@@ -291,7 +292,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
                     .addChild(UIComponentFactory.getFactory(new UIComponent_Button(prop.getLabel()) {
                             @Override
                             public void onClick() {
-                                breadcrumbs.add(new Breadcrumb(prop,pc.getField(prop.getId())));
+                                breadcrumbs.add(new Breadcrumb(prop,prop.getId(),pc));
                                 showCurrentSettings();
                             }
                         }.setTextTooltip(prop.getTooltip()))
@@ -325,7 +326,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
                             .addChild(UIComponentFactory.getFactory(new UIComponent_Button(ps.getOptionLabel(pc.getField(prop.getId()).get())) {
                             @Override
                             public void onClick() {
-                                breadcrumbs.push(new Breadcrumb(prop, pc.getField(prop.getId())));
+                                breadcrumbs.push(new Breadcrumb(prop, prop.getId(), pc));
                                 showCurrentSettings();
                             }
                         })

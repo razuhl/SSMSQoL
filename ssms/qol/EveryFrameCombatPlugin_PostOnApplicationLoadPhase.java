@@ -31,19 +31,22 @@ import ssms.qol.properties.PropertiesContainerConfigurationFactory;
  */
 public class EveryFrameCombatPlugin_PostOnApplicationLoadPhase extends BaseEveryFrameCombatPlugin {
     protected CombatEngineAPI engine;
+    static protected boolean initialized = false;
     
     @Override
     public void init(CombatEngineAPI engine) {
         this.engine = engine;
-        Global.getLogger(ModPlugin.class).log(Level.INFO, "CombatPlugin_Init");
     }
     
     @Override
     public void advance(float amount, List<InputEventAPI> events) {
-        Global.getLogger(ModPlugin.class).log(Level.INFO, "loading settings");
-        PropertiesContainerConfigurationFactory fac = PropertiesContainerConfigurationFactory.getInstance();
-        fac.load();
-        fac.MergeSettings();
+        if ( !initialized ) {
+            Global.getLogger(ModPlugin.class).log(Level.INFO, "loading settings");
+            initialized = true;
+            PropertiesContainerConfigurationFactory fac = PropertiesContainerConfigurationFactory.getInstance();
+            fac.load();
+            fac.MergeSettings();
+        }
         
         if ( engine != null ) engine.removePlugin(this);
     }

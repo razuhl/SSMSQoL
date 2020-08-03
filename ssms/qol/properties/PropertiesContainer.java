@@ -282,7 +282,7 @@ public class PropertiesContainer<K> {
     public boolean copyTo(PropertiesContainer pc, boolean onlyNonConfiguredFields) {
         if ( pc != this && ( (id == null && pc.getId() == null) || (id != null && id.equals(pc.getId())) ) ) {
             for ( Map.Entry<String,PropertyField> entry : fields.entrySet() ) {
-                if ( onlyNonConfiguredFields && pc.getField(entry.getKey()).isConfigured() ) continue;
+                if ( onlyNonConfiguredFields && (!pc.getUsesConfigurationState() || pc.getField(entry.getKey()).isConfigured()) ) continue;
                 pc.setFieldValue(entry.getKey(), conf.getProperty(entry.getKey()).deepCopyValue(entry.getValue().get()), false);
                 if ( onlyNonConfiguredFields ) pc.markFieldAsNotConfigured(entry.getKey(), false);
             }

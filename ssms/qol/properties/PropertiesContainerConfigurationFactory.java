@@ -152,7 +152,7 @@ public class PropertiesContainerConfigurationFactory {
                         //not an active setting that needs to be merged, nor a reset setting
                         continue;
                     }
-
+                    
                     boolean isValid;
                     try {
                         isValid = setting.isValid();
