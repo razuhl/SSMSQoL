@@ -17,12 +17,17 @@
  */
 package ssms.qol;
 
+import com.fs.starfarer.api.campaign.CampaignEntityPickerListener;
 import com.fs.starfarer.api.campaign.CampaignUIAPI;
 import com.fs.starfarer.api.campaign.CargoAPI;
 import com.fs.starfarer.api.campaign.CargoPickerListener;
 import com.fs.starfarer.api.campaign.CommDirectoryAPI;
 import com.fs.starfarer.api.campaign.CoreUITabId;
+import com.fs.starfarer.api.campaign.CustomDialogDelegate;
+import com.fs.starfarer.api.campaign.CustomProductionPickerDelegate;
+import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.FleetMemberPickerListener;
+import com.fs.starfarer.api.campaign.GroundRaidTargetPickerDelegate;
 import com.fs.starfarer.api.campaign.IndustryPickerListener;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
 import com.fs.starfarer.api.campaign.InteractionDialogPlugin;
@@ -34,6 +39,8 @@ import com.fs.starfarer.api.campaign.econ.Industry;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.combat.BattleCreationContext;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
+import com.fs.starfarer.api.impl.campaign.graid.GroundRaidObjectivePlugin;
+import java.awt.Color;
 import java.util.List;
 import ssms.qol.events.GlobalEvents;
 import ssms.qol.events.InteractionDialogDismissed;
@@ -223,5 +230,60 @@ public class InteractionDialogAPIWrapper implements InteractionDialogAPI {
     @Override
     public void showIndustryPicker(String title, String okText, MarketAPI market, List<Industry> industries, IndustryPickerListener listener) {
         originalApi.showIndustryPicker(title, okText, market, industries, listener);
+    }
+
+    @Override
+    public void showCustomDialog(float customPanelWidth, float customPanelHeight, CustomDialogDelegate delegate) {
+        originalApi.showCustomDialog(customPanelWidth, customPanelHeight, delegate);
+    }
+
+    @Override
+    public void setOptionColor(Object optionId, Color color) {
+        originalApi.setOptionColor(optionId, color);
+    }
+
+    @Override
+    public void makeStoryOption(Object optionId, int storyPoints, float bonusXPFraction, String soundId) {
+        originalApi.makeStoryOption(optionId, storyPoints, bonusXPFraction, soundId);
+    }
+
+    @Override
+    public void addOptionSelectedText(Object optionId) {
+        originalApi.addOptionSelectedText(optionId);
+    }
+
+    @Override
+    public void addOptionSelectedText(Object optionId, boolean allowPrintingStoryOption) {
+        originalApi.addOptionSelectedText(optionId, allowPrintingStoryOption);
+    }
+
+    @Override
+    public void showFleetMemberRecoveryDialog(String title, List<FleetMemberAPI> pool, List<FleetMemberAPI> storyPool, FleetMemberPickerListener listener) {
+        originalApi.showFleetMemberRecoveryDialog(title, pool, storyPool, listener);
+    }
+
+    @Override
+    public void showGroundRaidTargetPicker(String title, String okText, MarketAPI market, List<GroundRaidObjectivePlugin> data, GroundRaidTargetPickerDelegate listener) {
+        originalApi.showGroundRaidTargetPicker(title, okText, market, data, listener);
+    }
+
+    @Override
+    public void showVisualPanel() {
+        originalApi.showVisualPanel();
+    }
+
+    @Override
+    public void showCustomProductionPicker(CustomProductionPickerDelegate delegate) {
+        originalApi.showCustomProductionPicker(delegate);
+    }
+
+    @Override
+    public void showCampaignEntityPicker(String title, String selectedText, String okText, FactionAPI factionForUIColors, List<SectorEntityToken> entities, CampaignEntityPickerListener listener) {
+        originalApi.showCampaignEntityPicker(title, selectedText, okText, factionForUIColors, entities, listener);
+    }
+
+    @Override
+    public boolean isCurrentOptionHadAConfirm() {
+        return originalApi.isCurrentOptionHadAConfirm();
     }
 }

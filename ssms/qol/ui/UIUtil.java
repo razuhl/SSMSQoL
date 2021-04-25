@@ -20,9 +20,6 @@ package ssms.qol.ui;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.Fonts;
-import com.fs.starfarer.api.ui.TooltipMakerAPI;
-import com.fs.starfarer.settings.StarfarerSettings;
-import com.fs.starfarer.ui.impl.StandardTooltipV2;
 import com.fs.starfarer.ui.impl.StandardTooltipV2Expandable;
 import java.awt.Color;
 import java.lang.ref.WeakReference;
@@ -32,10 +29,10 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
+import ssms.qol.UtilObfuscation.LabelRendererWrapper;
 
 /**
  *
@@ -45,7 +42,7 @@ public class UIUtil {
     static protected volatile UIUtil instance;
     protected WeakReference<Focusable> focusedObject;
     protected WeakReference<StandardTooltipV2Expandable> tooltipComponent;
-    protected Map<String,com.fs.graphics.A.Object> labelRenderers;
+    protected Map<String,LabelRendererWrapper> labelRenderers;
     
     protected UIUtil() {
         labelRenderers = new HashMap<>();
@@ -64,16 +61,17 @@ public class UIUtil {
         return localInstance;
     }
     
-    protected com.fs.graphics.A.Object getLabelRenderer(String font) {
-        com.fs.graphics.A.Object labelRenderer = labelRenderers.get(font);
+    //com.fs.graphics.A.Object
+    protected LabelRendererWrapper getLabelRenderer(String font) {
+        LabelRendererWrapper labelRenderer = labelRenderers.get(font);
         if ( labelRenderer == null ) {
-            labelRenderer = new com.fs.graphics.A.Object("", font);
+            labelRenderer = new LabelRendererWrapper("", font);
             //Alpha
-            labelRenderer.o00000(1f);
+            labelRenderer.setAlpha(255);
             //Outline
             //labelRenderer.\u00F400000(true);
             //Shadow
-            labelRenderer.\u00D200000(true);
+            labelRenderer.setShadow(true);
             labelRenderers.put(font, labelRenderer);
         }
         return labelRenderer;
@@ -119,40 +117,8 @@ public class UIUtil {
     }
     
     public void renderText(String font, String text, Color textColor, float x, float y, float w, float h, Alignment alignment, TextStyle style) {
-        com.fs.graphics.A.Object labelRenderer = getLabelRenderer(font);
-        labelRenderer.Object(text);
-        labelRenderer.Ò00000(textColor);
-        switch ( style ) {
-            case Normal: labelRenderer.\u00F400000(false); labelRenderer.\u00D200000(false); break;
-            case Outline: labelRenderer.\u00F400000(true); labelRenderer.\u00D200000(false); break;
-            case Shadow: labelRenderer.\u00F400000(false); labelRenderer.\u00D200000(true); break;
-        }
-        switch (alignment) {
-          case BR:
-            labelRenderer.ø00000(x + w, y);
-            break;
-          case BMID:
-            labelRenderer.Ø00000(x + w / 2.0f, y);
-            break;
-          case MID:
-            //labelRenderer.for(label.getPosition().getX() + label.getPosition().getWidth() / 2.0F, label.getPosition().getY() + label.getPosition().getHeight() / 2.0F);
-            break;
-          case TR:
-            labelRenderer.Ô00000(x + w, y + h);
-            break;
-          case TL:
-            labelRenderer.Object(x, y + h);
-            break;
-          case TMID:
-            labelRenderer.ô00000(x + w / 2.0f, y + h);
-            break;
-          case RMID:
-            labelRenderer.Ô00000(x + w, y + h / 2.0f + labelRenderer.ÔO0000() / 2.0f);
-            break;
-          case LMID:
-            labelRenderer.ö00000(x, y + h / 2.0f);
-            break;
-        } 
+        LabelRendererWrapper labelRenderer = getLabelRenderer(font);
+        labelRenderer.renderText(font, text, textColor, x, y, w, h, alignment, style);
     }
     
     public float getTextWidth(String text) {
@@ -160,7 +126,7 @@ public class UIUtil {
     }
     
     public float getTextWidth(String font, String text) {
-        return getLabelRenderer(font).\u00D500000(text);
+        return getLabelRenderer(font).getTextWidth(text);
     }
     
     public float getTextHeight(String text) {
@@ -168,7 +134,7 @@ public class UIUtil {
     }
     
     public float getTextHeight(String font, String text) {
-        return getLabelRenderer(font).\u00D200000(text);
+        return getLabelRenderer(font).getTextHeight(text);
     }
     
     public Focusable setFocus(Focusable focusedObject) {

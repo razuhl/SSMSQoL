@@ -1,11 +1,11 @@
 {
     "id": "SSMSQoL",
-    "name": "SSMS QoL",
+    "name": "10 SSMS QoL",
     "author": "Malte Schulze",
-    "version": "1.4.0",
+    "version": "1.5",
     "utility": "true",
     "description": "Various UI and gameplay enhancements.",
-    "gameVersion": "0.9.1a",
+    "gameVersion": "0.95a-RC15",
 	"jars":["jars/SSMSQoL.jar"],
 	"modPlugin":"ssms.qol.ModPlugin"
 }

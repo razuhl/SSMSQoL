@@ -119,7 +119,7 @@ public abstract class UIComponent_ListSelect<T> extends UIComponent_Base {
             if ( event.isConsumed() ) continue;
             if ( draggingScrollbar && event.isMouseMoveEvent() ) {
                 int contentHeight = ((!options.isEmpty() ? (options.size()-1) : 1)*verticalGap+options.size()*lineHeight-layout.getHeight());
-                int yContent = (int)((float)(layout.getY() + layout.getHeight() - event.getY())/layout.getHeight() * contentHeight);
+                int yContent = (int)((float)(layout.getY() + layout.getHeight() - event.getY())/layout.getHeight() * (contentHeight-layout.getHeight()));
                 scrollTo(yContent);
             }
             if ( event.isMouseMoveEvent() || event.isMouseScrollEvent() ) {
@@ -172,8 +172,7 @@ public abstract class UIComponent_ListSelect<T> extends UIComponent_Base {
     protected void scrollTo(int scrollPos) {
         int lineHeight = 30;
         int verticalGap = context.<Integer>getStyle(UIContext.StyleProperty.verticalGap);
-        
-        scrollPos = Math.min((!options.isEmpty() ? (options.size()-1) : 1)*verticalGap+options.size()*lineHeight-layout.getHeight(), scrollPos);
+        scrollPos = Math.min((!options.isEmpty() ? (options.size()-1) : 1)*verticalGap+options.size()*lineHeight-layout.getHeight()*2, scrollPos);
         scrollPos = Math.max(0, scrollPos);
         this.scrollPos = scrollPos;
     }

@@ -32,6 +32,7 @@ import com.fs.starfarer.api.campaign.VisualPanelAPI;
 import com.fs.starfarer.api.characters.CharacterCreationData;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
+import com.fs.starfarer.api.ui.CustomPanelAPI;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ssms.qol.events.GlobalEvents;
@@ -101,8 +102,8 @@ public class VisualPanelAPIWrapper implements VisualPanelAPI {
     }
 
     @Override
-    public void showCustomPanel(float width, float height, CustomUIPanelPlugin plugin) {
-        originalAPI.showCustomPanel(width, height, plugin);
+    public CustomPanelAPI showCustomPanel(float width, float height, CustomUIPanelPlugin plugin) {
+        return originalAPI.showCustomPanel(width, height, plugin);
     }
 
     @Override
@@ -197,6 +198,31 @@ public class VisualPanelAPIWrapper implements VisualPanelAPI {
     @Override
     public void closeCoreUI() {
         originalAPI.closeCoreUI();
+    }
+
+    @Override
+    public void showSecondPerson(PersonAPI person) {
+        originalAPI.showSecondPerson(person);
+    }
+
+    @Override
+    public void hideSecondPerson() {
+        originalAPI.hideSecondPerson();
+    }
+
+    @Override
+    public void showPersonInfo(PersonAPI person, boolean minimalMode, boolean withRelBar) {
+        originalAPI.showPersonInfo(person, minimalMode, withRelBar);
+    }
+
+    @Override
+    public void showThirdPerson(PersonAPI person) {
+        originalAPI.showThirdPerson(person);
+    }
+
+    @Override
+    public void hideThirdPerson() {
+        originalAPI.hideThirdPerson();
     }
     
 }

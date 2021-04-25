@@ -25,12 +25,13 @@ import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.ui.UIComponentAPI;
 import com.fs.starfarer.ui.impl.StandardTooltipV2;
 import com.fs.starfarer.ui.impl.StandardTooltipV2Expandable;
-import com.fs.starfarer.util.A.B;
-import com.fs.starfarer.util.A.C;
 import java.awt.Color;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.Callable;
+import java.util.logging.Logger;
 import org.apache.log4j.Level;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -78,6 +79,12 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
     protected UIComponent_Parent root;
     protected Stack<Breadcrumb> breadcrumbs = new Stack<>();
     protected LogHandler logHandler;
+
+    @Override
+    public void renderBelow(float alphaMult) {
+        
+    }
+    
     protected static class Breadcrumb {
         PropertyConfiguration propertyConfiguration;
         String propertyFieldId;
@@ -491,9 +498,7 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
         
         StandardTooltipV2Expandable tooltip = UIUtil.getInstance().getTooltip();
         if ( tooltip != null ) {
-            B evs = new B();
-            for ( InputEventAPI ev : events ) evs.add((C)ev);
-            tooltip.processInput(evs);
+            UtilObfuscation.ProcessInput(tooltip, events);
         }
     }
 }

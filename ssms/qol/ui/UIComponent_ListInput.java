@@ -231,7 +231,7 @@ public class UIComponent_ListInput<T> extends UIComponent_Base {
         
         @Override
         public void onClick() {
-            if ( i > 0 && i < UIComponent_ListInput.this.options.size() ) {
+            if ( i >= 0 && i < UIComponent_ListInput.this.options.size() ) {
                 UIComponent_ListInput.this.options.remove(i);
                 valueHandler.submitValue(context, new ArrayList<>(options));
                 buildOptionComponents();

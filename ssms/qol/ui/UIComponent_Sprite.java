@@ -19,7 +19,9 @@ package ssms.qol.ui;
 
 import com.fs.graphics.Sprite;
 import java.awt.Color;
+import java.util.Map;
 import org.lwjgl.opengl.GL11;
+import ssms.qol.UtilObfuscation;
 
 /**
  *
@@ -42,7 +44,7 @@ public class UIComponent_Sprite extends UIComponent_Base {
     }
 
     public UIComponent_Sprite setIcon(String icon) {
-        sprite.setTexture(com.fs.graphics.OooO.\u00D200000(icon));
+        sprite.setTexture(UtilObfuscation.GetTexture(icon));
         return this;
     }
     
