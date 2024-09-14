@@ -25,6 +25,7 @@ import com.fs.starfarer.api.campaign.CommDirectoryAPI;
 import com.fs.starfarer.api.campaign.CoreUITabId;
 import com.fs.starfarer.api.campaign.CustomDialogDelegate;
 import com.fs.starfarer.api.campaign.CustomProductionPickerDelegate;
+import com.fs.starfarer.api.campaign.CustomVisualDialogDelegate;
 import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.FleetMemberPickerListener;
 import com.fs.starfarer.api.campaign.GroundRaidTargetPickerDelegate;
@@ -221,10 +222,20 @@ public class InteractionDialogAPIWrapper implements InteractionDialogAPI {
     public void showCargoPickerDialog(String title, String okText, String cancelText, boolean small, float textPanelWidth, CargoAPI cargo, CargoPickerListener listener) {
         originalApi.showCargoPickerDialog(title, okText, cancelText, small, textPanelWidth, cargo, listener);
     }
+    
+    @Override
+    public void showCargoPickerDialog(String title, String okText, String cancelText, boolean small, float textPanelWidth, float width, float height, CargoAPI cargo, CargoPickerListener listener) {
+        originalApi.showCargoPickerDialog(title, okText, cancelText, small, textPanelWidth, cargo, listener);
+    }
 
     @Override
     public void makeOptionOpenCore(String optionId, CoreUITabId tabId, CampaignUIAPI.CoreUITradeMode mode) {
         originalApi.makeOptionOpenCore(optionId, tabId, mode);
+    }
+    
+    @Override
+    public void makeOptionOpenCore(String optionId, CoreUITabId tabId, CampaignUIAPI.CoreUITradeMode mode, boolean onlyShowTargetTabShortcut) {
+        originalApi.makeOptionOpenCore(optionId, tabId, mode, onlyShowTargetTabShortcut);
     }
 
     @Override
@@ -285,5 +296,10 @@ public class InteractionDialogAPIWrapper implements InteractionDialogAPI {
     @Override
     public boolean isCurrentOptionHadAConfirm() {
         return originalApi.isCurrentOptionHadAConfirm();
+    }
+
+    @Override
+    public void showCustomVisualDialog(float customPanelWidth, float customPanelHeight, CustomVisualDialogDelegate delegate) {
+        originalApi.showCustomVisualDialog(customPanelWidth, customPanelHeight, delegate);
     }
 }

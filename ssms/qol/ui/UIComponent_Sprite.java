@@ -19,7 +19,6 @@ package ssms.qol.ui;
 
 import com.fs.graphics.Sprite;
 import java.awt.Color;
-import java.util.Map;
 import org.lwjgl.opengl.GL11;
 import ssms.qol.UtilObfuscation;
 

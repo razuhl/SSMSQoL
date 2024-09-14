@@ -49,10 +49,9 @@ public class UtilTrade {
     }
     
     protected UtilTrade() {
-        //Change 0.95a-RC14
-        nonEconItemBuyPriceMult = StarfarerSettings.ô00000("nonEconItemBuyPriceMult");//\u00D800000("nonEconItemBuyPriceMult");
-        nonEconItemSellPriceMult = StarfarerSettings.ô00000("nonEconItemSellPriceMult");
-        shipWeaponSellPriceMult = StarfarerSettings.ô00000("shipWeaponSellPriceMult");
+        nonEconItemBuyPriceMult = StarfarerSettings.o00000("nonEconItemBuyPriceMult");
+        nonEconItemSellPriceMult = StarfarerSettings.o00000("nonEconItemSellPriceMult");
+        shipWeaponSellPriceMult = StarfarerSettings.o00000("shipWeaponSellPriceMult");
     }
     
     public float priceForBuying(CargoStackAPI stack, MarketAPI market) {

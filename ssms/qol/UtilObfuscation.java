@@ -37,8 +37,8 @@ import ssms.qol.ui.UIUtil;
  */
 public class UtilObfuscation {
 
-    public static D GetTexture(String icon) {
-        return com.fs.graphics.H.o00000().get(icon);
+    public static com.fs.graphics.Object GetTexture(String icon) {
+        return com.fs.graphics.G.o00000().get(icon);
     }
     
     protected static Method mProcessInput = null;
@@ -47,7 +47,7 @@ public class UtilObfuscation {
     public static boolean InitProcessInput() {
         if ( mProcessInput == null ) {
             try {
-                cEventCollection = Class.forName("com.fs.starfarer.util.A.B");
+                cEventCollection = Class.forName("com.fs.starfarer.util.super.OoOO");
                 mProcessInput = StandardTooltipV2Expandable.class.getMethod("processInput", cEventCollection);
             } catch (ClassNotFoundException | NoSuchMethodException | SecurityException ex) {
                 Global.getLogger(ModPlugin.class).log(Level.ERROR, "Error reflecting types for processing input on tooltips!", ex);
@@ -85,22 +85,22 @@ public class UtilObfuscation {
                     for ( Method m : c.getMethods() ) {
                         if ( m.getName().equals("\u00F4O0000") && m.getParameterTypes().length == 0 ) mGetColor = m;
                         else if ( m.getName().equals("\u00D200000") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == Color.class ) mSetColor = m;
-                        else if ( m.getName().equals("int") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == boolean.class ) mSetOutline = m;
-                        else if ( m.getName().equals("Object") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == boolean.class ) mSetShadow = m;
+                        else if ( m.getName().equals("\u00F500000") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == boolean.class ) mSetOutline = m;
+                        else if ( m.getName().equals("\u00D300000") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == boolean.class ) mSetShadow = m;
                         else if ( m.getName().equals("\u00D500000") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == String.class && m.getReturnType() == float.class ) mGetWidth = m;
                         else if ( m.getName().equals("\u00D200000") && m.getParameterTypes().length == 1 && m.getParameterTypes()[0] == String.class && m.getReturnType() == float.class ) mGetHeight = m;
-                        else if ( m.getName().equals("o00000") && m.getParameterTypes().length == 2 && m.getParameterTypes()[0] == String.class && m.getParameterTypes()[1] == boolean.class ) mSetText = m;
+                        else if ( m.getName().equals("super") && m.getParameterTypes().length == 2 && m.getParameterTypes()[0] == String.class && m.getParameterTypes()[1] == boolean.class ) mSetText = m;
                         else if ( m.getParameterTypes().length == 2 && m.getParameterTypes()[0] == float.class && m.getParameterTypes()[1] == float.class ) {
                             switch ( m.getName() ) {
-                                case "o00000": mRenderRightAbove = m; break;
-                                case "\u00F800000": mRenderLeftAbove = m; break;
-                                case "\u00D400000": mRenderLeftBelow = m; break;
-                                case "Object": mRenderRightBelow = m; break;
+                                case "String": mRenderRightAbove = m; break;
+                                case "\u00D500000": mRenderLeftAbove = m; break;
+                                case "OO0000": mRenderLeftBelow = m; break;
+                                case "super": mRenderRightBelow = m; break;
                                 case "\u00F400000": mRenderCenterBelow = m; break;
-                                case "\u00F600000": mRenderRightCenter = m; break;
-                                case "return": mRenderLeftCenter = m; break;
-                                case "\u00D800000": mRenderCenterAbove = m; break;
-                                case "for": mRenderCenterCenter = m; break;
+                                case "\u00F800000": mRenderRightCenter = m; break;
+                                case "void": mRenderLeftCenter = m; break;
+                                case "\u00F500000": mRenderCenterAbove = m; break;
+                                case "do": mRenderCenterCenter = m; break;
                             }
                         }
                     }

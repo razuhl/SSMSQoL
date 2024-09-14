@@ -33,6 +33,8 @@ import com.fs.starfarer.api.characters.CharacterCreationData;
 import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
+import java.awt.Color;
+import java.util.Set;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import ssms.qol.events.GlobalEvents;
@@ -149,6 +151,16 @@ public class VisualPanelAPIWrapper implements VisualPanelAPI {
     public void showCore(CoreUITabId tabId, SectorEntityToken other, CampaignUIAPI.CoreUITradeMode mode, CoreInteractionListener listener) {
         originalAPI.showCore(tabId, other, mode, listener);
     }
+    
+    @Override
+    public void showCore(CoreUITabId tabId, SectorEntityToken other, Object custom, CoreInteractionListener listener) {
+        originalAPI.showCore(tabId, other, custom, listener);
+    }
+
+    @Override
+    public void showCore(CoreUITabId tabId, SectorEntityToken other, Object custom, CampaignUIAPI.CoreUITradeMode mode, CoreInteractionListener listener) {
+        originalAPI.showCore(tabId, other, custom, mode, listener);
+    }
 
     @Override
     public void hideCore() {
@@ -223,6 +235,36 @@ public class VisualPanelAPIWrapper implements VisualPanelAPI {
     @Override
     public void hideThirdPerson() {
         originalAPI.hideThirdPerson();
+    }
+
+    @Override
+    public void showMapMarker(SectorEntityToken marker, String title, Color titleColor, boolean withIntel, String icon, String text, Set<String> intelTags) {
+        originalAPI.showMapMarker(marker, title, titleColor, withIntel, icon, text, intelTags);
+    }
+
+    @Override
+    public void removeMapMarkerFromPersonInfo() {
+        originalAPI.removeMapMarkerFromPersonInfo();
+    }
+
+    @Override
+    public void showFirstPerson() {
+        originalAPI.showFirstPerson();
+    }
+
+    @Override
+    public void hideFirstPerson() {
+        originalAPI.hideFirstPerson();
+    }
+
+    @Override
+    public void showLargePlanet(SectorEntityToken planet) {
+        originalAPI.showLargePlanet(planet);
+    }
+
+    @Override
+    public boolean isShowingPersonInfo(PersonAPI person) {
+        return originalAPI.isShowingPersonInfo(person);
     }
     
 }

@@ -5,7 +5,7 @@
     "version": "1.5",
     "utility": "true",
     "description": "Various UI and gameplay enhancements.",
-    "gameVersion": "0.95a-RC15",
+    "gameVersion": "0.97a-RC11",
 	"jars":["jars/SSMSQoL.jar"],
 	"modPlugin":"ssms.qol.ModPlugin"
 }

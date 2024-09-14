@@ -17,23 +17,14 @@
  */
 package ssms.qol;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CustomUIPanelPlugin;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
-import com.fs.starfarer.api.ui.TooltipMakerAPI;
-import com.fs.starfarer.api.ui.UIComponentAPI;
-import com.fs.starfarer.ui.impl.StandardTooltipV2;
 import com.fs.starfarer.ui.impl.StandardTooltipV2Expandable;
 import java.awt.Color;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.Callable;
-import java.util.logging.Logger;
-import org.apache.log4j.Level;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
 import ssms.qol.properties.PropertiesContainer;
@@ -44,7 +35,6 @@ import ssms.qol.properties.PropertyConfigurationListContainer;
 import ssms.qol.properties.PropertyConfigurationListPrimitive;
 import ssms.qol.properties.PropertyConfigurationListSelectable;
 import ssms.qol.properties.PropertyConfigurationSelectable;
-import ssms.qol.properties.PropertyField;
 import ssms.qol.ui.AlignmentHorizontal;
 import ssms.qol.ui.AlignmentVertical;
 import ssms.qol.ui.LogHandler;
@@ -62,7 +52,6 @@ import ssms.qol.ui.UIComponent_Parent;
 import ssms.qol.ui.UIComponent_Row;
 import ssms.qol.ui.UIComponent_Scrollpane;
 import ssms.qol.ui.UIComponent_Spacer;
-import ssms.qol.ui.UIComponent_Sprite;
 import ssms.qol.ui.UIComponent_TextField;
 import ssms.qol.ui.UIContext;
 import ssms.qol.ui.UIUtil;
@@ -82,6 +71,11 @@ public class CustomUIPanelPlugin_PropertiesContainer<K> implements CustomUIPanel
 
     @Override
     public void renderBelow(float alphaMult) {
+        
+    }
+
+    @Override
+    public void buttonPressed(Object buttonId) {
         
     }
     
